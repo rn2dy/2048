@@ -1,0 +1,85 @@
+body {
+    margin-top: 0;
+}
+
+.content {
+  margin-top: 30px;
+}
+
+.header {
+  padding-left: 15px;
+}
+
+.header h2 {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 15px;
+}
+
+.score-container, .best-container {
+  display: inline-block;
+  width: 100px;
+  padding: 15px 5px;
+}
+
+.score-container:after {
+  content: "Your Score";
+}
+
+.best-container:after {
+  content: "Best So Far";
+}
+
+.container-main, .container-other {
+  margin-top: 25px;
+  vertical-align: top;
+}
+
+.container-main {
+  width: 580px;
+  margin-left: 20px;
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.container-other {
+  width: 650px;
+  display: inline-block;
+  border-left: 1px dashed rgba(143, 121, 100, 0.42);
+  text-align: center;
+}
+
+.view-box {
+  padding: 10px;
+  display: inline-block;
+}
+
+.game-container.small {
+  zoom: 0.5;
+  margin: auto;
+}
+
+.above-game {
+  text-align: center;
+}
+.game-container {
+  margin:auto;
+  margin-top: 15px;
+}
+
+.giveup-button {
+  display: inline-block;
+  background: #8f7a66;
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #f9f6f2;
+  height: 40px;
+  line-height: 42px;
+  text-align: center;
+}
+
+.footer {
+  margin-top: 50px;
+  text-align: center;
+}
