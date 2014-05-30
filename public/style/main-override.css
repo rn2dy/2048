@@ -79,7 +79,27 @@ body {
   text-align: center;
 }
 
+#view-box-tmpl {
+  display: none;
+}
+
 .footer {
   margin-top: 50px;
   text-align: center;
+}
+
+.name-container {
+  margin-top: 1.5em;
+  font-size: 0.88em;
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+}
+
+.view-box .score-container {
+  padding-bottom: 8px;
+  font-size: 20px;
+}
+.view-box .score-container:after {
+  content: "Score";
 }

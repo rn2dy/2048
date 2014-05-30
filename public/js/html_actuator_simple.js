@@ -1,7 +1,6 @@
-function HTMLActuator(ctx) {
+function HTMLActuatorSimple(ctx) {
   this.tileContainer    = document.querySelector("." + ctx + " .tile-container");
-  this.scoreContainer   = document.querySelector(".header .score-container");
-  this.bestContainer    = document.querySelector(".header .best-container");
+  this.scoreContainer   = document.querySelector("." + ctx + " .score-container");
   this.messageContainer = document.querySelector("." + ctx + " .game-message");
 
   this.score = 0;
@@ -22,7 +21,6 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
     });
 
     self.updateScore(metadata.score);
-    self.updateBestScore(metadata.bestScore);
 
     if (metadata.terminated) {
       if (metadata.over) {
@@ -33,11 +31,6 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
     }
 
   });
-};
-
-// Continues the game (both restart and keep playing)
-HTMLActuator.prototype.continueGame = function () {
-  this.clearMessage();
 };
 
 HTMLActuator.prototype.clearContainer = function (container) {
@@ -120,10 +113,6 @@ HTMLActuator.prototype.updateScore = function (score) {
   }
 };
 
-HTMLActuator.prototype.updateBestScore = function (bestScore) {
-  this.bestContainer.textContent = bestScore;
-};
-
 HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
   var message = won ? "You win!" : "Game over!";
@@ -136,4 +125,4 @@ HTMLActuator.prototype.clearMessage = function () {
   // IE only takes one value to remove at a time.
   this.messageContainer.classList.remove("game-won");
   this.messageContainer.classList.remove("game-over");
-};
+}
