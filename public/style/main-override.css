@@ -2,6 +2,19 @@ body {
     margin-top: 0;
 }
 
+#timer {
+  font-family: "Courier New", monospace;
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  font-size: 36px;
+}
+.my-name {
+  text-align: center;
+  font-size: 1.5em;
+  margin-top: 15px;
+  font-weight: bold;
+}
 .content {
   margin-top: 30px;
 }
@@ -94,6 +107,8 @@ body {
   display: inline-block;
   vertical-align: top;
   width: 50%;
+  text-align: left;
+  font-weight: bold;
 }
 
 .view-box .score-container {
@@ -102,4 +117,51 @@ body {
 }
 .view-box .score-container:after {
   content: "Score";
+}
+#backdrop {
+  height: 100%;
+  width: 100%;
+  display: none;
+  background: rgba(0,0,0, 0.73);
+  position: fixed;
+  top:0;bottom:0;left:0;right:0;
+  z-index: 99999;
+}
+#countdown {
+  visibility: hidden;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 600px;
+  height: 250px;
+  margin-left: -300px;
+  color: rgb(58, 46, 46);
+  text-align: center;
+  z-index: 99999;
+}
+#countdown > div {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  visibility: visible;
+}
+#countdown > div > p {
+  position: absolute;
+  color: white;
+  margin: 0;
+  font-size: 42px;
+  top: 50%;
+  margin-top: -40px;
+  width: 100%;
+  text-align: center;
+}
+#countdown .ct-msg {
+  display: none;
+}
+#countdown > div.wait-msg p {
+  font-size: 34px;
+}
+#countdown .count {
+  font-size: 1.5em;
+  font-weight: bold;
 }

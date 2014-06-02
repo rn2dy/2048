@@ -32,14 +32,15 @@ html, body {
 }
 .btn {
   padding: 0.5em 1.5em;
-  font-size: 1.8em;;
+  font-size: 1.8em;
   width: 260px;
   height: 73px;
   border-radius: 5px;
   cursor: pointer;
-  -webkit-transition: width 0.5s;
-  -moz-transition: width 0.5s;
-  transition: width 0.5s;
+  -webkit-transition: font-size 0.2s;
+  -moz-transition: font-size 0.2s;
+  transition: font-size 0.2s;
+  margin-bottom: 10px;
 }
 .btn.small {
   font-size: 1.5em;
@@ -55,7 +56,42 @@ html, body {
   border: none;
 }
 .btn:hover {
-  width: 240px;
+  font-size: 1.4em;
+}
+#yourname {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 250px;
+  margin-left: -250px;
+  margin-top: -125px;
+  color: rgb(58, 46, 46);
+  background: rgb(58, 46, 46);
+  text-align: center;
+  -webkit-box-shadow: 0 0 15px #000;
+  -moz-box-shadow: 0 0 15px #000;
+  box-shadow: 0 0 15px #000;
+}
+#yourname * {
+  font-size: 1.5em;
+}
+#yourname > div:first-child {
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+#yourname button {
+  width: 4em;
+  line-height: 1.5em;
+}
+#backdrop {
+  height: 100%;
+  width: 100%;
+  display: none;
+  background: rgba(0,0,0, 0.53);
+  position: fixed;
+  top:0;bottom:0;left:0;right:0;
 }
 </style>
 </head>
@@ -66,13 +102,51 @@ html, body {
       <h1>Let's 2048</h1>
     </div>
     <div class="menu">
+      <!-- <div class="btn&#45;ctrl"> -->
+      <!--   <button class="btn btn&#45;brown" onclick="window.location='/singleplayer.html'">Solo</button> -->
+      <!-- </div> -->
       <div class="btn-ctrl">
-        <button class="btn btn-brown" onclick="window.location='/singleplayer.html'">Solo</button>
-      </div>
-      <div class="btn-ctrl">
-        <button class="btn btn-black small" onclick="window.location='/multiplayer.html'">Mutliplayer</button>
+        <button class="btn btn-black small" onclick="askForName(2)">Mutliplayer-2</button>
+        <button class="btn btn-black small" onclick="askForName(3)">Mutliplayer-3</button>
+        <button class="btn btn-black small" onclick="askForName(4)">Mutliplayer-4</button>
       </div>
     </div>
   </div>
+  <div id="backdrop"></div>
+  <div id="yourname">
+    <div>
+      <input type="text" id="name" value="" placeholder="Your Name"/>
+    </div>
+    <div>
+      <button onclick="redirect()">Go</button>
+    </div>
+  </div>
+
+<script type="text/javascript" charset="utf-8">
+var roomType = 2;
+
+function askForName(rt) {
+  roomType = rt;
+  document.querySelector('#yourname').style.display = 'block';
+  document.querySelector('#backdrop').style.display = 'block';
+}
+
+function redirect() {
+  var player = document.querySelector('#name').value;
+  if(player.length == 0) {
+    alert('No Joke!');
+    return
+  }
+  if(player.length > 10) {
+    alert('Too Long! Life is short.');
+    return
+  }
+  if(player.length < 3) {
+    alert('Too Short! Too lazy.');
+    return
+  }
+  window.location = '/multiplayer?roomType=' + roomType + '&player=' + player;
+}
+</script>
 </body>
 </html>

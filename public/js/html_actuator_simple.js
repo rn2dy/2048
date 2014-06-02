@@ -2,11 +2,11 @@ function HTMLActuatorSimple(ctx) {
   this.tileContainer    = document.querySelector("." + ctx + " .tile-container");
   this.scoreContainer   = document.querySelector("." + ctx + " .score-container");
   this.messageContainer = document.querySelector("." + ctx + " .game-message");
-
   this.score = 0;
+  this.ctx = ctx;
 }
 
-HTMLActuator.prototype.actuate = function (grid, metadata) {
+HTMLActuatorSimple.prototype.actuate = function (grid, metadata) {
   var self = this;
 
   window.requestAnimationFrame(function () {
@@ -33,13 +33,13 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
   });
 };
 
-HTMLActuator.prototype.clearContainer = function (container) {
+HTMLActuatorSimple.prototype.clearContainer = function (container) {
   while (container.firstChild) {
     container.removeChild(container.firstChild);
   }
 };
 
-HTMLActuator.prototype.addTile = function (tile) {
+HTMLActuatorSimple.prototype.addTile = function (tile) {
   var self = this;
 
   var wrapper   = document.createElement("div");
@@ -83,20 +83,20 @@ HTMLActuator.prototype.addTile = function (tile) {
   this.tileContainer.appendChild(wrapper);
 };
 
-HTMLActuator.prototype.applyClasses = function (element, classes) {
+HTMLActuatorSimple.prototype.applyClasses = function (element, classes) {
   element.setAttribute("class", classes.join(" "));
 };
 
-HTMLActuator.prototype.normalizePosition = function (position) {
+HTMLActuatorSimple.prototype.normalizePosition = function (position) {
   return { x: position.x + 1, y: position.y + 1 };
 };
 
-HTMLActuator.prototype.positionClass = function (position) {
+HTMLActuatorSimple.prototype.positionClass = function (position) {
   position = this.normalizePosition(position);
   return "tile-position-" + position.x + "-" + position.y;
 };
 
-HTMLActuator.prototype.updateScore = function (score) {
+HTMLActuatorSimple.prototype.updateScore = function (score) {
   this.clearContainer(this.scoreContainer);
 
   var difference = score - this.score;
@@ -113,7 +113,7 @@ HTMLActuator.prototype.updateScore = function (score) {
   }
 };
 
-HTMLActuator.prototype.message = function (won) {
+HTMLActuatorSimple.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
   var message = won ? "You win!" : "Game over!";
 
@@ -121,7 +121,7 @@ HTMLActuator.prototype.message = function (won) {
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;
 };
 
-HTMLActuator.prototype.clearMessage = function () {
+HTMLActuatorSimple.prototype.clearMessage = function () {
   // IE only takes one value to remove at a time.
   this.messageContainer.classList.remove("game-won");
   this.messageContainer.classList.remove("game-over");

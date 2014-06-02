@@ -1,22 +1,24 @@
-function GameManagerSimple(size, actuator) {
+function GameManagerSimple(size, actuator, bestContainer) {
   this.size           = size; // Size of the grid
   this.actuator       = actuator;
   this.startTiles     = 2;
-
-  this.setup();
+  this.bestContainer  = bestContainer;
 }
 
-// Set up the game
-GameManagerSimple.prototype.setup = function () {
-  this.grid        = new Grid(this.size);
-  this.score       = 0;
-
-  // Add the initial tiles
-  this.addStartTiles();
-
-  // Update the actuator
+// render grid
+GameManagerSimple.prototype.setState = function(gameState) {
+  var oldScore = this.score;
+  this.grid = new Grid(this.size, gameState.grid.cells);
+  this.score = gameState.score;
   this.actuate();
-};
+
+  if(this.score != oldScore){
+    var best = parseInt(this.bestContainer.innerText);
+    if (this.score > best) {
+      this.bestContainer.innerText = this.score + '';
+    }
+  }
+}
 
 // Set up the initial tiles to start the game with
 GameManagerSimple.prototype.addStartTiles = function () {
@@ -43,7 +45,6 @@ GameManagerSimple.prototype.actuate = function () {
     won:        this.won,
     quit:       this.quit
   });
-
 };
 
 // Save all tile positions and remove merger info
@@ -68,11 +69,9 @@ GameManagerSimple.prototype.move = function (direction) {
   // 0: up, 1: right, 2: down, 3: left
   var self = this;
 
-  if (this.isGameTerminated()) return; // Don't do anything if the game's over
-
   var cell, tile;
 
-  var vector     = this.getVector(direction);
+  var vector = this.getVector(direction);
   var traversals = this.buildTraversals(vector);
   var moved      = false;
 

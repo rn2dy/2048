@@ -2,6 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="initial-scale=0.8, maximum-scale=1">
   <title>2048 - Multiplayer</title>
   <link rel="shortcut icon" href="favicon.ico">
 
@@ -10,6 +12,9 @@
 </head>
 
 <body>
+  <div id="timer">
+   <label id="hours">00</label>:<label id="minutes">00</label>:<label id="seconds">00</label> 
+  </div>
   <div class="header">
     <div class="heading">
       <h2 class="title">2048 - Multiplayer</h2>
@@ -64,6 +69,7 @@
 
         </div>
       </div>
+      <div class="my-name">{{ .Player }}</div>
     </div>
 
     <div class="container-other">
@@ -78,9 +84,12 @@
   </div>
 
   <div id="view-box-tmpl">
-    <div class="view-box">
-      <div class="game-container small _player_">
-
+    <div class="view-box _player_id_">
+      <div class="header">
+        <div class="name-container">_player_name_</div>
+        <div class="score-container">0</div>
+      </div>
+      <div class="game-container small">
         <div class="game-message">
           <p>&nbsp;</p>
           <div class="lower">
@@ -123,6 +132,20 @@
     </div>
   </div>
 
+  <div id="backdrop"></div>
+
+  <div id="countdown">
+    <div class="ct-msg">
+      <p>Game starts in <span class="count">3</span></p>
+    </div>
+    <div class="wait-msg">
+      <p>Waiting for <span class="joined-count">{{ minusOne .RoomType }}</span> more players to join...</p>
+    </div>
+  </div>
+
+  <div style="display:none;" id="init-data" data-player="{{ .Player }}" data-room-type="{{ .RoomType }}"></div>
+
+  <script src="js/underscore-min.js"></script>
   <script src="js/bind_polyfill.js"></script>
   <script src="js/classlist_polyfill.js"></script>
   <script src="js/animframe_polyfill.js"></script>

@@ -1,14 +1,37 @@
-function GameManager(size, inputManager, actuator) {
+function GameManager(size, inputManager, actuator, gameClient, bestContainer) {
   this.size           = size; // Size of the grid
   this.inputManager   = inputManager;
   this.actuator       = actuator;
+  this.gameClient     = gameClient;
+  this.bestContainer  = bestContainer;
 
   this.startTiles     = 2;
 
   this.inputManager.on("move", this.move.bind(this));
 
   this.setup();
+
+  // sync happend after setup
+  this.gameClient.afterOpen(this.sync.bind(this));
+
+  // connect
+  this.gameClient.connect();
 }
+
+// unlock inputManager so that it can take input
+GameManager.prototype.unlock = function() {
+  this.inputManager.unlock();
+};
+
+// delegate to GameClient#on
+GameManager.prototype.on = function(msgType, func) {
+  this.gameClient.on(msgType, func);
+};
+
+GameManager.prototype.sync = function () {
+  // serialize here as string to avoid extra json decoding on the server side
+  this.gameClient.broadcast('sync', JSON.stringify(this.serialize()));
+};
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
 GameManager.prototype.isGameTerminated = function () {
@@ -19,7 +42,6 @@ GameManager.prototype.isGameTerminated = function () {
 GameManager.prototype.setup = function () {
   this.grid        = new Grid(this.size);
   this.score       = 0;
-  this.bestScore   = 0;
   this.over        = false;
   this.won         = false;
 
@@ -51,7 +73,6 @@ GameManager.prototype.addRandomTile = function () {
 GameManager.prototype.actuate = function () {
   this.actuator.actuate(this.grid, {
     score:      this.score,
-    bestScore:  this.bestScore,
     over:       this.over,
     won:        this.won,
     terminated: this.isGameTerminated()
@@ -98,6 +119,7 @@ GameManager.prototype.move = function (direction) {
   var vector     = this.getVector(direction);
   var traversals = this.buildTraversals(vector);
   var moved      = false;
+  var oldScore = this.score;
 
   // Save the current tile positions and remove merger information
   this.prepareTiles();
@@ -147,6 +169,16 @@ GameManager.prototype.move = function (direction) {
     }
 
     this.actuate();
+
+    if(this.score != oldScore){
+      var best = parseInt(this.bestContainer.innerText);
+      if (this.score > best) {
+        this.bestContainer.innerText = this.score + '';
+      }
+    }
+
+    // only sync if actually moved.
+    this.sync();
   }
 };
 
