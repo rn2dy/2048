@@ -7,6 +7,16 @@
 
 <img src="http://i1277.photobucket.com/albums/y497/Qiang_Han/Screen_Shot_2014-06-02_at_2_02_56_AM_zps08757103.png" alt="2048-countdown"/>
 
+### Development
+
+To develop/run the app you need to install [Go](http://golang.org/doc/install)
+
+To start up the server, just do
+
+```GO
+go run game-server.go
+```
+
 TODO:
 
 * [] choose complexity level
